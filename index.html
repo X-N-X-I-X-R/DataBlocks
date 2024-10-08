@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>Template עם הוספת ריבועים דינמית עם נושא ושפה</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* בסיס לעיצוב הכרטיסיות */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 5px 5px 0 0;
+            color: white;
+            margin-right: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tab.active {
+            background-color: #ff6b6b;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 0 0 10px 10px;
+            border: 1px solid #444;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+      <div  class="container">
+        <h1>DataBlocks</h1>
+        
+        <!-- מיכל להצגת הנושאים -->
+        <div  id="subjectList" style="margin-bottom: 20px;"></div>
+        
+        <!-- כרטיסיות -->
+        <div class="tab-container">
+            <div class="tab active" onclick="openTab(event, 'addHexTab')">הוסף ריבוע</div>
+            <div class="tab" onclick="openTab(event, 'searchHexTab')">חפש ריבועים</div>
+        </div>
+
+
+        <!-- תוכן כרטיסיות -->
+        <div id="addHexTab" class="tab-content active">
+            <div class="input-container">
+                <label id="labelss" for="languageInput">בחר שפה</label>
+                <select id="languageInput">
+                    <option value="Python">Python</option>
+                    <option value="Linux">Linux</option>
+                    <option value="Node.js">Node.js</option>
+                    <option value="TypeScript">TypeScript</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="PineScript">PineScript</option>
+                </select>
+                
+                <label id="labelss" for="typeInput">בחר סוג קלט</label>
+                <select id="typeInput">
+                    <option value="פקודה">פקודה</option>
+                    <option value="מודול">מודול</option>
+                    <option value=" תקלה">תקלה</option>
+                </select>
+                <br>
+                <label id="labelss" for="subjectInput">נושא</label>
+                <select id="subjectInput" onclick="loadSubjects()">
+                    <option value="">בחר</option>
+                </select>
+                <br>
+                <label id="labelss" for="commandInput">שם</label>
+                <input type="text" id="commandInput" placeholder="הכנס שם הפקודה/ מודול /תקלה">
+                <br>
+                <label id="labelss" for="explanationInput">הסבר</label>
+                <textarea id="explanationInput" placeholder="הסבר מפורט - שימושים|נקודות חשובות|התקנות וכו    "></textarea>
+                <br>
+                <label id="labelss" for="codeInput">קוד</label>
+                <textarea id="codeInput" placeholder="הכנס קוד" oninput="highlightCode()"></textarea>
+
+                <!-- תיבת התצוגה של הקוד עם הדגשת התחביר -->
+                <pre><code id="highlightedCode" class="language-python"></code></pre>
+
+                <button onclick="addHex()">הוסף</button>
+            </div>
+        </div>
+
+        <div id="searchHexTab" class="tab-content">
+            <div class="search-container">
+                <div class="mb-3">
+                    <label id="labelss" for="subjectInputs">נושא</label>
+                    <select id="subjectInputs" onclick="loadSubjects()">
+                        <option value="">בחר</option>
+                    </select>
+                       
+        <div class="search-container">
+            <div class="mb-3">
+                <label for="subjectInputss" class="form-label">חפש לפי נושא:</label>
+                <input type="text" class="form-control" id="subjectInputss" placeholder="לדוגמה: ניהול זיכרון">
+            </div>
+         
+                </div>
+
+                <div class="mb-3">
+                    <label for="languageSearch" class="form-label">חפש לפי שפה:</label>
+                    <select id="languageSearch" class="form-select">
+                        <option value="">בחר שפה (לא חובה)</option>
+                        <option value="Python">Python</option>
+                        <option value="Linux">Linux</option>
+                        <option value="Node.js">Node.js</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="PineScript">PineScript</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="typeSearch" class="form-label">חפש לפי סוג קלט:</label>
+                    <select id="typeSearch" class="form-select">
+                        <option value="">בחר סוג קלט (לא חובה)</option>
+                        <option value="פקודה">פקודה</option>
+                        <option value="מודול">מודול</option>
+                        <option value="תקלה">תקלה</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary w-100" onclick="searchHexes()">חפש</button>
+            </div>
+        </div>
+
+        <!-- מיכל להצגת הריבועים שנוצרים ונשלפים -->
+        <div class="hex-grid" id="hexGrid"></div>
+        <br>
+
+    </div>
+
+    <!-- ייבוא של הסקריפטים החיצוניים -->
+    <script type="module" src="scripts/firebase_functions.js"></script>
+    <script type="module" src="scripts/hex_functions.js"></script>
+    <script type="module" src="./scripts/firebase_search_delete.js"></script>
+    <script type="module" src="./database/firebase_config_CDN.js"></script>
+    
+
+    <script>
+        function openTab(event, tabName) {
+            var i, tabContent, tablinks;
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+    </script>
+
+    <script>
+        // פונקציה לטעינת קובץ ה-JSON ולהצגת הרשימה ב-dropdown
+        async function loadSubjects() {
+            try {
+                // קריאת קובץ JSON מהמיקום שהוגדר
+                const response = await fetch('./data/subject.json');
+                const data = await response.json();
+
+                // שליפת רשימת ה-subjects מהקובץ JSON
+                const subjects = data.subjects;
+
+                // מציאת שדה ה-select של ה-subject
+                const subjectSelect = document.getElementById('subjectInput');
+                const subjectSelects = document.getElementById('subjectInputs');
+                
+
+                // איפוס האפשרויות הקיימות
+                subjectSelect.innerHTML = '<option value="">בחר</option>';
+                subjectSelects.innerHTML = '<option value="">בחר</option>';
+
+                // הוספת אפשרויות מתוך ה-JSON ל-dropdown (select)
+                subjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = subject;
+                    subjectSelect.appendChild(option);
+                });
+
+                subjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject;
+                    option.textContent = subject;
+                    subjectSelects.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error('Error loading JSON:', error);
+            }
+        }
+
+        // קריאת הפונקציה כשנטען הדף
+        document.addEventListener('DOMContentLoaded', loadSubjects);
+    </script>
+
+</body>
+</html>

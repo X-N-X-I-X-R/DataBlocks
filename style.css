@@ -1,0 +1,234 @@
+
+    /* Base styling for dark mode */
+    body {
+        background-color: #121212;
+        color: #f0f0f0;
+        font-family: 'Inter', sans-serif;
+        direction: rtl;
+        text-align: right;
+        padding: 20px;
+        line-height: 1.6;
+    }
+
+    /* Styling for the container of the input form */
+    .input-container {
+        width: 100%;    
+        max-width: 1000px;   
+
+        
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #2a2a2a;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        font-size: 15px;
+        ;
+       
+      
+    }
+
+
+    /* Heading Styling */
+    h1 {
+        text-align: center;
+        color: #ff6b6b;
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    /* Styling for form fields */
+    .input-container input{
+        width: 98%;
+        padding: 12px;
+        margin-bottom: 15px;
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        color: #f0f0f0;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: border-color 0.3s, background-color 0.3s;
+    }
+    .input-container select{
+        width: 30%;
+        gap : 10px;
+        
+        padding: 12px;
+        margin-bottom: 15px;
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        color: #f0f0f0;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: border-color 0.3s, background-color 0.3s;
+    }
+    .input-container textarea {
+        width: 100%;
+   
+    
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        color: #f0f0f0;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: border-color 0.3s, background-color 0.3s;
+    }
+
+
+
+    /* Focus effect for form elements */
+    .input-container input:focus,
+    .input-container select:focus,
+    .input-container textarea:focus {
+        border-color: #ff6b6b;
+        background-color: #3a3a3a;
+        outline: none;
+        box-shadow: 0 0 6px rgba(255, 107, 107, 0.5);
+    }
+
+    /* Submit Button Styling */
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff6b6b;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    /* Button hover effect */
+    button:hover {
+        background-color: #e95757;
+        transform: translateY(-3px);
+    }
+
+    /* Hex grid container for dynamically added content */
+    .hex-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-around;
+    }
+
+    /* Styling for each hex (card) */
+    .hex {
+        width: calc(33.333% - 20px); /* Three cards per row */
+        background-color: #1e1e1e;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+    }
+
+    /* Hex card hover effect */
+    .hex:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Content inside the hex cards */
+    .hex-content {
+        text-align: right;
+    }
+
+    /* Command and explanation text inside hex cards */
+    .hex-content .command, 
+    .hex-content .explanation {
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #ddd;
+    }
+
+    /* Strong text styling for hex cards */
+    .hex-content strong {
+        color: #ff6b6b;
+        font-weight: 700;
+    }
+
+
+
+
+    /* Responsive adjustments for hex grid */
+    @media (max-width: 768px) {
+        .hex {
+            width: calc(50% - 20px); /* Two cards per row */
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hex {
+            width: 100%; /* One card per row */
+        }
+
+        /* Responsive adjustments for select element */
+        .input-container select {
+            font-size: 13px;
+            padding: 8px;
+
+
+        }
+        /* Animation for fading out hex card */
+/* Animation for fading out hex card */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}   
+
+
+
+}
+   textarea#codeInput {
+            width: 98%;
+            min-height: 150px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+            border: 1px solid #444;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre;
+            direction: ltr; /* כיוון כתיבה משמאל לימין */
+            unicode-bidi: embed; /* שמירת כיוון הטקסט משמאל לימין */
+        }
+
+        /* תיבת התצוגה של הקוד עם Prism */
+        pre code {
+            background-color: #2a2a2a;
+            color: #dcdcdc;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            direction: ltr; /* כיוון כתיבה משמאל לימין */
+            unicode-bidi: embed; /* שמירת כיוון הטקסט משמאל לימין */
+        }
+
+
+
+    /* אפקט להתמקד בתיבה */
+    textarea#codeInput:focus {
+        border-color: #ff6b6b; /* צבע גבול אדום בעת פוקוס */
+        outline: none;
+        box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); /* אפקט הצללה */
+    }
+
+    /* עיצוב מיוחד לטקסט placeholder */
+    textarea#codeInput::placeholder {
+        color: #888; /* Placeholder בצבע אפור כהה */
+        font-style: italic;
+    }
